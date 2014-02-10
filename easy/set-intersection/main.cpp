@@ -45,37 +45,23 @@ int main(int argc, char** argv) {
 			list<int> list1 = strtolist(line1);
 			list<int> list2 = strtolist(line2);
 
-			list<int>::iterator it1 = list1.end(); it1--;
+			list<int>::iterator it1 = list1.begin();
 			list<int>::iterator it2 = list2.begin();
 
-			if (*it2 > *it1) {
-				cout << endl;
-			} else if (*it2 == *it1) {
-				cout << *it2 << endl;
-			} else {
-				while (*it2 < *it1) {
-					it1--;
-					if (it1 == list1.begin()) break;
-				}
-
-				stringstream ss;
-				while (true) {
-					if (*it1 == *it2) {
-						ss << *it1 << ",";
-						it1++; it2++;
-						if (it1 == list1.end() || it2 == list2.end()) break;
-					} else if (*it2 < *it1) {
-						it2++;
-						if (it2 == list2.end()) break;
-					} else {
-						it1++;
-						if (it1 == list1.end()) break;
-					}
-				}
-				string str = ss.str();
-				if (!str.empty()) str.erase(str.size() - 1, 1);
-				cout << str << endl;
+			stringstream ss;
+			while (it1 != list1.end() && it2 != list2.end()) {
+                if (*it2 < *it1) it2++;
+                else if (*it1 < *it2) it1++;
+                else {
+                    ss << *it1 << ",";
+    				it1++; it2++;
+                }
 			}
+            
+			string str = ss.str();
+            // erase comma
+			if (!str.empty()) str.erase(str.size() - 1, 1);
+			cout << str << endl;
 		}
 	}
 	return 0;
